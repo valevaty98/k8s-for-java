@@ -13,11 +13,18 @@ spec:
       labels:
         app: user-service
     spec:
+      volumes:
+        - name: user-service-volume
+          persistentVolumeClaim:
+            claimName: user-pvc
       containers:
         - name: user-service
-          image: epamuladzislauvaliavaty/user-service
+          image: epamuladzislauvaliavaty/user-service:latest
           ports:
             - containerPort: 8080
+          volumeMounts:
+            - mountPath: "/opt/app/users-data"
+              name: user-service-volume
           env:
             - name: DB_DOMAIN
               value: host.docker.internal
