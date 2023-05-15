@@ -1,0 +1,89 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: user-db-ss
+  namespace: k8s-program
+spec:
+  serviceName: user-db-service
+  selector:
+    matchLabels:
+      app: user-db-pod
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: user-db-pod
+    spec:
+      containers:
+        - name: user-db
+          image: postgres:15.2
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              value: admin
+            - name: POSTGRES_PASSWORD
+              value: password
+            - name: POSTGRES_DB
+              value: user-db
+            - name: PGDATA
+              value: /data/pgdata
+          volumeMounts:
+            - name: user-db-volume
+              mountPath: /data
+  # Volume Claim
+  volumeClaimTemplates:
+    - metadata:
+        name: user-db-volume
+        namespace: k8s-program
+      spec:
+        accessModes: 
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: post-db-ss
+  namespace: k8s-program
+spec:
+  serviceName: post-db-service
+  selector:
+    matchLabels:
+      app: post-db-pod
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: post-db-pod
+    spec:
+      containers:
+        - name: post-db
+          image: postgres:15.2
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              value: admin
+            - name: POSTGRES_PASSWORD
+              value: password
+            - name: POSTGRES_DB
+              value: post-service-db
+            - name: PGDATA
+              value: /data/pgdata
+          volumeMounts:
+            - name: post-db-volume
+              mountPath: /data
+  # Volume Claim
+  volumeClaimTemplates:
+    - metadata:
+        name: post-db-volume
+        namespace: k8s-program
+      spec:
+        accessModes: 
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi

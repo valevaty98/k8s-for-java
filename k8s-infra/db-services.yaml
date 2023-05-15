@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-db-service
+  namespace: k8s-program
+spec:
+  selector:
+    app: user-db-pod
+  type: ClusterIP
+  clusterIP: 10.100.187.198
+  ports:
+    - port: 5432
+      targetPort: 5432
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: post-db-service
+  namespace: k8s-program
+spec:
+  selector:
+    app: post-db-pod
+  type: ClusterIP
+  clusterIP: 10.110.170.72
+  ports:
+    - port: 5432
+      targetPort: 5432

@@ -27,9 +27,9 @@ spec:
               name: user-service-volume
           env:
             - name: DB_DOMAIN
-              value: host.docker.internal
+              value: 10.100.187.198
             - name: DB_PORT
-              value: "5433"
+              value: "5432"
             - name: DB_NAME
               value: user-db
             - name: DB_USERNAME
@@ -59,9 +59,9 @@ spec:
             - containerPort: 8080
           env:
             - name: DB_DOMAIN
-              value: host.docker.internal
+              value: 10.110.170.72
             - name: DB_PORT
-              value: "5434"
+              value: "5432"
             - name: DB_NAME
               value: post-service-db
             - name: DB_USERNAME
@@ -69,5 +69,5 @@ spec:
             - name: DB_PASSWORD
               value: password
             - name: USER_SERVICE_URL
-              value: http://192.168.65.4:30008 # Worked Node InternalIP address + Node Port
+              value: http://192.168.65.4:30008 # Worker Node InternalIP address + Node Port
               
