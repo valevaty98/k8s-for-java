@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service-deployment
+  namespace: k8s-program
+spec:
+  selector:
+    matchLabels:
+      app: user-service
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: user-service
+    spec:
+      containers:
+        - name: user-service
+          image: epamuladzislauvaliavaty/user-service
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_DOMAIN
+              value: host.docker.internal
+            - name: DB_PORT
+              value: "5433"
+            - name: DB_NAME
+              value: user-db
+            - name: DB_USERNAME
+              value: admin
+            - name: DB_PASSWORD
+              value: password
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: post-service-deployment
+  namespace: k8s-program
+spec:
+  selector:
+    matchLabels:
+      app: post-service
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: post-service
+    spec:
+      containers:
+        - name: post-service
+          image: epamuladzislauvaliavaty/post-service
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_DOMAIN
+              value: host.docker.internal
+            - name: DB_PORT
+              value: "5434"
+            - name: DB_NAME
+              value: post-service-db
+            - name: DB_USERNAME
+              value: admin
+            - name: DB_PASSWORD
+              value: password
+            - name: USER_SERVICE_URL
+              value: http://192.168.65.4:30008 # Worked Node InternalIP address + Node Port
+              
