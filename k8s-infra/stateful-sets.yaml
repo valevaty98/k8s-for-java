@@ -26,10 +26,28 @@ spec:
           image: postgres:15.2
           ports:
             - containerPort: 5432
+          startupProbe:
+            exec:
+              command: ["psql", "-U", "admin", "-d", "user-db", "-c", "SELECT 1"]
+            failureThreshold: 10
+            periodSeconds: 5
+            timeoutSeconds: 2
+          livenessProbe:
+            exec:
+              command: ["psql", "-U", "admin", "-d", "user-db", "-c", "SELECT 1"]
+            initialDelaySeconds: 15
+            timeoutSeconds: 2
+          readinessProbe:
+            exec:
+              command: ["psql", "-U", "admin", "-d", "user-db", "-c", "SELECT 1"]
+            initialDelaySeconds: 3
+            timeoutSeconds: 2
           env:
             - name: POSTGRES_USER
               value: admin
             - name: POSTGRES_PASSWORD
+              value: password
+            - name: PGPASSWORD # this this is needed for probes to work
               value: password
             - name: POSTGRES_DB
               value: user-db
@@ -80,10 +98,28 @@ spec:
           image: postgres:15.2
           ports:
             - containerPort: 5432
+          startupProbe:
+            exec:
+              command: ["psql", "-U", "admin", "-d", "post-service-db", "-c", "SELECT 1"]
+            failureThreshold: 10
+            periodSeconds: 5
+            timeoutSeconds: 2
+          livenessProbe:
+            exec:
+              command: ["psql", "-U", "admin", "-d", "post-service-db", "-c", "SELECT 1"]
+            initialDelaySeconds: 15
+            timeoutSeconds: 2
+          readinessProbe:
+            exec:
+              command: ["psql", "-U", "admin", "-d", "post-service-db", "-c", "SELECT 1"]
+            initialDelaySeconds: 3
+            timeoutSeconds: 2
           env:
             - name: POSTGRES_USER
               value: admin
             - name: POSTGRES_PASSWORD
+              value: password
+            - name: PGPASSWORD # this this is needed for probes to work
               value: password
             - name: POSTGRES_DB
               value: post-service-db

@@ -22,6 +22,26 @@ spec:
           image: epamuladzislauvaliavaty/user-service:latest
           ports:
             - containerPort: 8080
+          startupProbe:
+            httpGet:
+              path: actuator/health
+              port: 8080
+            failureThreshold: 10
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: actuator/health
+              port: 8080
+            initialDelaySeconds: 3
+            periodSeconds: 5
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: actuator/health
+              port: 8080
+            successThreshold: 2
+            periodSeconds: 5
+            failureThreshold: 1
           volumeMounts:
             - mountPath: "/opt/app/users-data"
               name: user-service-volume
@@ -72,6 +92,26 @@ spec:
           image: epamuladzislauvaliavaty/post-service
           ports:
             - containerPort: 8080
+          startupProbe:
+            httpGet:
+              path: actuator/health
+              port: 8080
+            failureThreshold: 10
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: actuator/health
+              port: 8080
+            initialDelaySeconds: 3
+            periodSeconds: 5
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: actuator/health
+              port: 8080
+            successThreshold: 2
+            periodSeconds: 5
+            failureThreshold: 1
           env:
             - name: DB_DOMAIN
               valueFrom:
