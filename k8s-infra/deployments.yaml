@@ -27,15 +27,30 @@ spec:
               name: user-service-volume
           env:
             - name: DB_DOMAIN
-              value: 10.100.187.198
+              valueFrom:
+                configMapKeyRef:
+                  name: user-service-cm
+                  key: DB_DOMAIN
             - name: DB_PORT
-              value: "5432"
+              valueFrom:
+                configMapKeyRef:
+                  name: user-service-cm
+                  key: DB_PORT
             - name: DB_NAME
-              value: user-db
+              valueFrom:
+                configMapKeyRef:
+                  name: user-service-cm
+                  key: DB_NAME
             - name: DB_USERNAME
-              value: admin
+              valueFrom:
+                secretKeyRef:
+                  name: user-db-secret
+                  key: DB_USERNAME
             - name: DB_PASSWORD
-              value: password
+              valueFrom:
+                secretKeyRef:
+                  name: user-db-secret
+                  key: DB_PASSWORD
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -59,15 +74,32 @@ spec:
             - containerPort: 8080
           env:
             - name: DB_DOMAIN
-              value: 10.110.170.72
+              valueFrom:
+                configMapKeyRef:
+                  name: post-service-cm
+                  key: DB_DOMAIN
             - name: DB_PORT
-              value: "5432"
+              valueFrom:
+                configMapKeyRef:
+                  name: post-service-cm
+                  key: DB_PORT
             - name: DB_NAME
-              value: post-service-db
+              valueFrom:
+                configMapKeyRef:
+                  name: post-service-cm
+                  key: DB_NAME
             - name: DB_USERNAME
-              value: admin
+              valueFrom:
+                secretKeyRef:
+                  name: post-db-secret
+                  key: DB_USERNAME
             - name: DB_PASSWORD
-              value: password
+              valueFrom:
+                secretKeyRef:
+                  name: post-db-secret
+                  key: DB_PASSWORD
             - name: USER_SERVICE_URL
-              value: http://192.168.65.4:30008 # Worker Node InternalIP address + Node Port
-              
+              valueFrom:
+                configMapKeyRef:
+                  name: post-service-cm
+                  key: USER_SERVICE_URL
