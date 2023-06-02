@@ -48,6 +48,7 @@ public class PostService {
         if (postOptional.isPresent()) {
             Post existingPost = postOptional.get();
             existingPost.setText(post.getText());
+            existingPost.setTopic(post.getTopic());
             existingPost.setPostedAt(new Date());
 
             return postRepository.save(post);

@@ -27,5 +27,7 @@ public class Post {
     @Size(max = 50, message = "username size should be less 50")
     private String text;
 
+    private String topic;
+
     private Date postedAt;
 }

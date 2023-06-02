@@ -37,6 +37,7 @@ data:
       author_id int8 NULL,
       posted_at timestamp(6) NULL,
       "text" varchar(50) NULL,
+      "topic" varchar(50) NULL,
       CONSTRAINT posts_pkey PRIMARY KEY (id)
     );
 
