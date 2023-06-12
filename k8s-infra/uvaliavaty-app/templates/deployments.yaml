@@ -2,12 +2,12 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: user-service-deployment
-  namespace: k8s-program
+  namespace: {{ .Values.namespace }}
 spec:
   selector:
     matchLabels:
       app: user-service
-  replicas: 2
+  replicas: {{ .Values.replicaCount }}
   template:
     metadata:
       labels:
@@ -76,12 +76,12 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: post-service-deployment
-  namespace: k8s-program
+  namespace: {{ .Values.namespace }}
 spec:
   selector:
     matchLabels:
       app: post-service
-  replicas: 2
+  replicas: {{ .Values.replicaCount }}
   strategy: 
     type: RollingUpdate
     rollingUpdate:

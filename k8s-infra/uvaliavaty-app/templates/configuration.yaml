@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: user-service-cm
-  namespace: k8s-program
+  namespace: {{ .Values.namespace }}
 data:
   DB_DOMAIN: 10.100.187.198
   DB_PORT: "5432"
@@ -24,7 +24,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: post-service-cm
-  namespace: k8s-program
+  namespace: {{ .Values.namespace }}
 data:
   DB_DOMAIN: 10.110.170.72
   DB_PORT: "5432"
@@ -51,7 +51,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: user-db-secret
-  namespace: k8s-program
+  namespace: {{ .Values.namespace }}
 data:
   DB_USERNAME: YWRtaW4=
   DB_PASSWORD: cGFzc3dvcmQ=
@@ -60,7 +60,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: post-db-secret
-  namespace: k8s-program
+  namespace: {{ .Values.namespace }}
 data:
   DB_USERNAME: YWRtaW4=
   DB_PASSWORD: cGFzc3dvcmQ=

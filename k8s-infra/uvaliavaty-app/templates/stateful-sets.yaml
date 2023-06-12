@@ -2,13 +2,13 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: user-db-ss
-  namespace: k8s-program
+  namespace: {{ .Values.namespace }}
 spec:
   serviceName: user-db-service
   selector:
     matchLabels:
       app: user-db-pod
-  replicas: 2
+  replicas: {{ .Values.replicaCount }}
   template:
     metadata:
       labels:
@@ -62,7 +62,7 @@ spec:
   volumeClaimTemplates:
     - metadata:
         name: user-db-volume
-        namespace: k8s-program
+        namespace: {{ .Values.namespace }}
       spec:
         accessModes: 
           - ReadWriteOnce
@@ -74,13 +74,13 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: post-db-ss
-  namespace: k8s-program
+  namespace: {{ .Values.namespace }}
 spec:
   serviceName: post-db-service
   selector:
     matchLabels:
       app: post-db-pod
-  replicas: 2
+  replicas: {{ .Values.replicaCount }}
   template:
     metadata:
       labels:
@@ -134,7 +134,7 @@ spec:
   volumeClaimTemplates:
     - metadata:
         name: post-db-volume
-        namespace: k8s-program
+        namespace: {{ .Values.namespace }}
       spec:
         accessModes: 
           - ReadWriteOnce
