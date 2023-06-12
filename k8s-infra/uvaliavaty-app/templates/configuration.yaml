@@ -3,6 +3,7 @@ kind: ConfigMap
 metadata:
   name: user-service-cm
   namespace: {{ .Values.namespace }}
+  {{- template "uvaliavaty-app.labels" . }}
 data:
   DB_DOMAIN: 10.100.187.198
   DB_PORT: "5432"
@@ -25,6 +26,7 @@ kind: ConfigMap
 metadata:
   name: post-service-cm
   namespace: {{ .Values.namespace }}
+  {{- template "uvaliavaty-app.labels" . }}
 data:
   DB_DOMAIN: 10.110.170.72
   DB_PORT: "5432"
