@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: uvaliavaty-app-ingress
+  namespace: {{ .Values.namespace }}
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  # Important we leave this blank, as we don't have DNS configured
+  # Blank means these rules will match ALL HTTP requests hitting the controller IP
+  host:
+  # This is important and required since Kubernetes 1.22
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          # Routing for the user-service
+          - pathType: Prefix
+            path: "/user-service/(.*)"
+            backend:
+              service:
+                name: user-service-service
+                port:
+                  number: 20008
+          # Routing for the post-service
+          - pathType: Prefix  
+            path: "/post-service/(.*)"
+            backend:
+              service:
+                name: post-service-service
+                port:
+                  number: 20009

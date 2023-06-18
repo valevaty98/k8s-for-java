@@ -4,14 +4,14 @@ metadata:
   name: user-service-service
   namespace: {{ .Values.namespace }}
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app: user-service
+  clusterIP: 10.110.170.71
   ports:
   - protocol: TCP
     port: 20008
     targetPort: 8080
-    nodePort: 30008
 ---
 apiVersion: v1
 kind: Service
@@ -19,11 +19,10 @@ metadata:
   name: post-service-service
   namespace: {{ .Values.namespace }}
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app: post-service
   ports:
   - protocol: TCP
     port: 20009
     targetPort: 8080
-    nodePort: 30009

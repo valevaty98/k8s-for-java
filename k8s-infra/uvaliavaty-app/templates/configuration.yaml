@@ -31,7 +31,8 @@ data:
   DB_DOMAIN: 10.110.170.72
   DB_PORT: "5432"
   DB_NAME: post-service-db
-  USER_SERVICE_URL: http://192.168.65.4:30008 # Worker Node InternalIP address + Node Port
+  # USER_SERVICE_URL: http://192.168.65.4:30008 # Worker Node InternalIP address + Node Port
+  USER_SERVICE_URL: http://10.110.170.71:20008 # <ClusterIP internal address>:<Cluster Port>
 
   init.sql: |
     CREATE TABLE posts (
